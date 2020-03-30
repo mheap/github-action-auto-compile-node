@@ -1,0 +1,8 @@
+name: Auto-Compile Node Actions
+description: Automatically compile node GitHub Actions to a single file
+runs:
+  using: docker
+  image: Dockerfile
+branding:
+  icon: battery
+  color: green
