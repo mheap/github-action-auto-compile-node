@@ -1,5 +1,9 @@
 name: Auto-Compile Node Actions
 description: Automatically compile node GitHub Actions to a single file
+inputs:
+  main:
+    description: Entrypoint file of your action to compile.
+    default: index.js
 runs:
   using: docker
   image: Dockerfile

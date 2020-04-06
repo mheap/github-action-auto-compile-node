@@ -35,6 +35,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-# Caveats
+# Options
 
-At the moment, the action only supports actions with an entrypoint of `index.js`.
+```yaml
+- uses: mheap/github-action-auto-compile-node@master
+  with:
+    # Define a custom entrypoint for your action. Defaults to "index.js"
+    main: lib/index.js
+```

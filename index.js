@@ -4,13 +4,11 @@ const exec = require("child_process").exec;
 const YAML = require("yaml");
 
 Toolkit.run(async (tools) => {
-  const workspace = process.env.GITHUB_WORKSPACE;
-
   // Run npm ci
   await new Promise((resolve, reject) => {
     exec(
       "npm ci --production",
-      { cwd: workspace, maxBuffer: 200 * 1024 },
+      { cwd: tools.workspace, maxBuffer: 200 * 1024 },
       (error, stdout, stderr) => {
         if (error) {
           reject(error);
@@ -24,7 +22,7 @@ Toolkit.run(async (tools) => {
   tools.log.complete("NPM install run");
 
   const { code } = await require("@zeit/ncc")(
-    path.join(workspace, "index.js"),
+    path.join(tools.workspace, tools.inputs.main),
     {
       debugLog: true,
     }
@@ -47,14 +45,14 @@ Toolkit.run(async (tools) => {
         mode: "100644",
         type: "blob",
         content: YAML.stringify(actionDef),
-        base_tree: process.env.GITHUB_SHA,
+        base_tree: tools.context.sha,
       },
       {
         path: "index.dist.js",
         mode: "100644",
         type: "blob",
         content: code,
-        base_tree: process.env.GITHUB_SHA,
+        base_tree: tools.context.sha,
       },
     ],
   });
@@ -65,7 +63,7 @@ Toolkit.run(async (tools) => {
     ...tools.context.repo,
     message: "Automatic compilation",
     tree: tree.data.sha,
-    parents: [process.env.GITHUB_SHA],
+    parents: [tools.context.sha],
   });
 
   tools.log.complete("Commit created");
