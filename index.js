@@ -22,7 +22,7 @@ Toolkit.run(async (tools) => {
   // Run npm ci
   await new Promise((resolve, reject) => {
     exec(
-      "npm ci --production",
+      "npm ci",
       { cwd: tools.workspace, maxBuffer: 200 * 1024 },
       (error, stdout, stderr) => {
         if (error) {
