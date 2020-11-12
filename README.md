@@ -1,3 +1,6 @@
+# This project is archived. I use and recommend [JasonEtco/build-and-tag-action](https://github.com/JasonEtco/build-and-tag-action) instead as it reimplements this action, and adds automatic release retagging
+-----
+
 # Auto Compile Node
 
 This action will take any Node.js action, compile and package it in to a single
